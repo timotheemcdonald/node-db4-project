@@ -27,4 +27,26 @@ router.get('/:id/instructions', (req, res) => {
     })
 })
 
+router.get('/:id/ingredients', (req, res) => {
+    const {id} = req.params
+    Recipes.getShoppingList(id)
+    .then(value => {
+        res.status(200).json({data: value})
+    })
+    .catch(error => { console.log(error)
+        res.status(500).json({ data: error})
+    })
+})
+
+router.post('/', (req,res) => {
+
+    Recipes.add(req.body)
+    .then(value => {
+        res.status(201).json(value)
+    })
+    .catch(error => {
+        res.status(500).json({data: error})
+    })
+})
+
 module.exports = router

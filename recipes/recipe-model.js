@@ -3,25 +3,31 @@ const db = require('../data/db-config')
 module.exports = {
     getRecipes,
     getShoppingList,
-    getInstructions
+    getInstructions,
+    add
 }
 
 function getRecipes() {
     return db('recipes')
 }
 
+function add(r){
+    return db('recipes').insert(r)
+}
+
 function getInstructions(recipe_id) {
     return db('instructions')
-    .join('ingredients', 'ingredients.id', 'instructions.ingredient_id', 'recipes', 'recipes.id', 'instructions.recipe_id')
-    .select('instructions.id', 'ingredients.ingredient_name', 'recipes.recipe_name')
+    .join('ingredients', 'ingredients.id', 'recipes', 'recipes.id', 'instructions.recipe_id')
+    .select('instructions.id', 'ingredients.ingredient', 'recipes.recipe_name')
     .where('instructions.recipe_id', '=', recipe_id)
 }
 
-function getShoppingList(recipe_id) {
-    return db('shoppingList')
-    .join('recipes', 'recipes.id', 'shoppingList.recipe_id', 'ingredients', 'ingredients.id', 'shoppingList.ingredient_id', 'instructions', 'instructions.quantity', 'shoppingList.quantity')
-    .select('shoppingList.id', 'recipes.recipe_name', 'ingredients.ingredient_name', 'instructions.quantity' )
-    .where('shoppingList.recipe_id', '=', recipe_id)
+function getShoppingList(id) {
+    return db('recipes_ingredients')
+    .join('ingredients', 'recipes_ingredients.ingredients_id', '=', 'ingredients.id')
+    .join('recipes', 'recipes_ingredients.recipe_id', '=', 'recipes.id')
+    .select('recipe', 'ingredient', 'quantity')
+    .where('recipes.id', id)
 }
 
 

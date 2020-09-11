@@ -1,22 +1,44 @@
-
-
-exports.seed = function (knex) {
-
-  const recipe = [
-    {
-      recipe_name: 'Lemonade'
-    },
-    {
-      recipe_name: 'Rice Krispies Treats'
-    },
-    {
-      recipe_name: 'Avocado Toast'
-    }
-  ]
-
-  return knex('recipes').insert(recipe)
-
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('recipes').truncate()
+    .then(function () {
+      // Inserts seed entries
+      return knex('recipes').insert([
+        {
+          id:1,
+          recipe: 'Lemonade'
+        },
+        {
+          id:2,
+          recipe: 'Rice Krispies Treats'
+        },
+        {
+          id:3,
+          recipe: 'Avocado Toast'
+        }
+      ]);
+    });
 };
+
+
+
+// exports.seed = function (knex) {
+
+//   const recipe = [
+    // {
+    //   recipe: 'Lemonade'
+    // },
+    // {
+    //   recipe: 'Rice Krispies Treats'
+    // },
+    // {
+    //   recipe: 'Avocado Toast'
+    // }
+//   ]
+
+//   return knex('recipes').insert(recipe)
+
+// };
 
 // return knex('recipes').truncate()
 // .then(function () {
