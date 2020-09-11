@@ -1,6 +1,6 @@
 const server = require('./server.js')
 
-const PORT = 7777
+const PORT = process.env.PORT || 7000;
 
 server.listen(PORT, () => {
     console.log(`Let's get cooking ${PORT} !`)

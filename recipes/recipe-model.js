@@ -10,26 +10,20 @@ function getRecipes() {
     return db('recipes')
 }
 
+function getInstructions(recipe_id) {
+    return db('instructions')
+    .join('ingredients', 'ingredients.id', 'instructions.ingredient_id', 'recipes', 'recipes.id', 'instructions.recipe_id')
+    .select('instructions.id', 'ingredients.ingredient_name', 'recipes.recipe_name')
+    .where('instructions.recipe_id', '=', recipe_id)
+}
+
 function getShoppingList(recipe_id) {
     return db('shoppingList')
-    .join('recipes', 'recipes.id', 'shoppingList.recipe_id')
-    .select('shoppingList.id', 'recipes.quantity', 'recipes.measurement')
+    .join('recipes', 'recipes.id', 'shoppingList.recipe_id', 'ingredients', 'ingredients.id', 'shoppingList.ingredient_id', 'instructions', 'instructions.quantity', 'shoppingList.quantity')
+    .select('shoppingList.id', 'recipes.recipe_name', 'ingredients.ingredient_name', 'instructions.quantity' )
     .where('shoppingList.recipe_id', '=', recipe_id)
 }
 
-function getInstructions(recipe_id) {
-    return db('instructions')
-    .join('recipes', 'recipes.id', 'instructions.recipe_id')
-    .select('instructions.id', 'recipes.')
-}
-
-// function find() {
-//     return db('schemes')
-// }
-
-// function findById(id) {
-//     return db('schemes').where({ id})
-// }
 
 // function findSteps(id) {
 //     return db('steps')

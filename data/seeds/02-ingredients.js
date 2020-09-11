@@ -9,24 +9,6 @@ exports.seed = function(knex) {
     },
     {
       ingredient_name: 'water'
-    },
-    {
-      ingredient_name: 'milk'
-    },
-    {
-      ingredient_name: 'butter'
-    },
-    {
-      ingredient_name: 'Rice Krispies Cereal'
-    },
-    {
-      ingredient_name: 'marshmallows'
-    },
-    {
-      ingredient_name: 'bread'
-    },
-    {
-      ingredient_name: 'avocadoes'
     }
   ]
 
